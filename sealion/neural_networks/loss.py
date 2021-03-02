@@ -40,16 +40,14 @@ class MSE(Loss):
         self.type_regression = True
 
     def loss(self, y, y_pred):
-        error = np.sum(np.power(y_pred - y, 2)) / (2 * len(y))
-        return error
+        return np.sum(np.power(y_pred - y, 2)) / (2 * len(y))
 
     def grad(self, y, y_pred):
         return (y_pred - y) / len(y)
 
 
 def softmax(x):
-    softmax_output = np.apply_along_axis(sfmx_indiv, 1, x)
-    return softmax_output
+    return np.apply_along_axis(sfmx_indiv, 1, x)
 
 
 class CrossEntropy(Loss):

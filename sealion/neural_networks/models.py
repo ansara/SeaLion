@@ -174,21 +174,17 @@ class NeuralNetwork:
         warnings.filterwarnings("ignore", category=np.ComplexWarning)
 
     def num_parameters(self):
-        num_params = 0
-        for layer in self.layers:
-            if isinstance(layer, self.Dense):
-                num_params += (
+        return sum((
                     np.product(layer.parameters["weights"].shape)
                     + layer.parameters["bias"].shape
-                )
-        return num_params
+                ) for layer in self.layers if isinstance(layer, self.Dense))
 
     def enter_parameters(self, parameters):
         for layer_num in range(len(self.layers)):
             try:
                 if (
-                    parameters[layer_num]["weights"] == None
-                    and parameters[layer_num]["bias"] == None
+                    parameters[layer_num]["weights"] is None
+                    and parameters[layer_num]["bias"] is None
                 ):
                     continue
             except Exception:
@@ -866,21 +862,17 @@ class NeuralNetwork_MapReduce:
                 warnings.filterwarnings("ignore", category=np.ComplexWarning)
 
             def num_parameters(self):
-                num_params = 0
-                for layer in self.layers:
-                    if isinstance(layer, self.Dense):
-                        num_params += (
+                return sum((
                             np.product(layer.parameters["weights"].shape)
                             + layer.parameters["bias"].shape
-                        )
-                return num_params
+                        ) for layer in self.layers if isinstance(layer, self.Dense))
 
             def enter_parameters(self, parameters):
                 for layer_num in range(len(self.layers)):
                     try:
                         if (
-                            parameters[layer_num]["weights"] == None
-                            and parameters[layer_num]["bias"] == None
+                            parameters[layer_num]["weights"] is None
+                            and parameters[layer_num]["bias"] is None
                         ):
                             continue
                     except Exception:
@@ -1460,7 +1452,7 @@ class NeuralNetwork_MapReduce:
 
                 self.models = []
 
-                for core in range(num_cores_used):
+                for _ in range(num_cores_used):
                     model = NeuralNetwork(self.layers)
                     model.finalize(self.loss, self.optimizer)
                     self.models.append(model)
@@ -1568,7 +1560,7 @@ class NeuralNetwork_MapReduce:
 
         self.models = []
 
-        for core in range(num_cores_used):
+        for _ in range(num_cores_used):
             model = NeuralNetwork(self.layers)
             model.finalize(self.loss, self.optimizer)
             self.models.append(model)

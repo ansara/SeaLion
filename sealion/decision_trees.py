@@ -210,8 +210,9 @@ class DecisionTree:
 
         y_pred = DecisionTree.predict(self, x_test)
         amount_correct = sum(
-            [1 if pred == label else 0 for pred, label in zip(y_pred, y_test)]
+            1 if pred == label else 0 for pred, label in zip(y_pred, y_test)
         )
+
         return (amount_correct) / len(y_pred)
 
     def visualize_evaluation(self, y_pred, y_test):

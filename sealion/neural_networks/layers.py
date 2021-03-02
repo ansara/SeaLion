@@ -16,7 +16,6 @@ class Layer:
         self.activation = None
         self.nesterov = False
         self.indices = ...
-        pass
 
     def forward(self, inputs):
         """This method saves the inputs, and returns its outputs"""
@@ -170,7 +169,7 @@ class Dense(Layer):
             weight_init_addition = np.sqrt(2 / input_size)
         elif weight_init.lower() == "lecun":
             weight_init_addition = np.sqrt(1 / input_size)
-        elif not weight_init.lower() == "none":
+        elif weight_init.lower() != "none":
             print(f"No known weight init : {weight_init}")
 
         self.parameters["weights"] = (
@@ -251,8 +250,7 @@ def elu(z, alpha=1):
 
 
 def elu_prime(z, alpha=1):
-    grad = np.where(z > 0, np.ones_like(z), alpha * (np.exp(z)))
-    return grad
+    return np.where(z > 0, np.ones_like(z), alpha * (np.exp(z)))
 
 
 def swish(x):
@@ -272,8 +270,7 @@ def selu(x):
 def selu_prime(x):
     alpha = 1.6732
     lamb = 1.0507
-    grad = np.where(x <= 0, np.ones_like(x), lamb * alpha * np.exp(x))
-    return grad
+    return np.where(x <= 0, np.ones_like(x), lamb * alpha * np.exp(x))
 
 
 class Tanh(Activation):

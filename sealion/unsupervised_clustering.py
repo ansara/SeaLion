@@ -21,12 +21,13 @@ def _change_labels(predicted):
     list_predicted = predicted.tolist()
     list_predicted.sort()
     num_diff_categories = len(set(list_predicted))
-    label_to_new_label = {}
     organized_diff_categories = list(set(list_predicted))
     organized_diff_categories.sort()
     penalty = 1 if indexOf(list_predicted, -1) != -1 else 0
-    for _ in range(num_diff_categories):
-        label_to_new_label[organized_diff_categories[_]] = _ - penalty
+    label_to_new_label = {
+        organized_diff_categories[_]: _ - penalty
+        for _ in range(num_diff_categories)
+    }
 
     for old, new in label_to_new_label.items():
         predicted[predicted == old] = new
@@ -102,11 +103,11 @@ class DBSCAN:
 
         plt.cla()
 
-        # reorganize points to classes -> matplotlib is prettier that way
-        point_and_class_list = []
         points_to_classes = self.cython_dbscan.get_points_to_classes()
-        for point, label in points_to_classes.items():
-            point_and_class_list.append([list(point), label])
+        # reorganize points to classes -> matplotlib is prettier that way
+        point_and_class_list = [
+            [list(point), label] for point, label in points_to_classes.items()
+        ]
 
         classes_to_points = defaultdict(list)
         for point_and_class in point_and_class_list:

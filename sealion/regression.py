@@ -318,8 +318,7 @@ class LogisticRegression:
         y_pred = LogisticRegression.predict(self, x_test)
         y_pred = np.array(y_pred).flatten()
         y_test = np.array(y_test).flatten()  # make sure same shape
-        perc_correct = _perc_correct(np.round_(y_pred), y_test)
-        return perc_correct
+        return _perc_correct(np.round_(y_pred), y_test)
 
     def visualize_evaluation(self, y_pred, y_test):
         """
@@ -537,8 +536,7 @@ class SoftmaxRegression:
         Z = np.dot(x_test, self.weights) + self.bias
         y_pred = np.apply_along_axis(softmax, 1, Z)
         y_pred = np.apply_along_axis(np.argmax, 1, y_pred)
-        perc_correct = _perc_correct(y_pred, y_test)
-        return perc_correct
+        return _perc_correct(y_pred, y_test)
 
     def visualize_evaluation(self, y_pred, y_test):
         """
