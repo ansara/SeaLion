@@ -70,13 +70,10 @@ def confusion_matrix(y_pred, y_test, plot=True):
         labels = np.identity(len(possible_classes)).tolist()
         for row in range(len(labels)):
             for col in range(len(labels[row])):
-                if row == col:
-                    """correct diagonal"""
-                    labels[row][col] = str(conf_matrix[row][col])
-                else:
+                if row != col:
                     """wrong diagonal"""
-                    """correct diagonal"""
-                    labels[row][col] = str(conf_matrix[row][col])
+                """correct diagonal"""
+                labels[row][col] = str(conf_matrix[row][col])
         labels = np.asarray(labels).reshape(
             len(possible_classes), len(possible_classes)
         )
@@ -150,7 +147,7 @@ def revert_one_hot_nn(one_hot_data):
     if np.isnan(one_hot_data).any():
         raise ValueError("No NaN values are allowed.")
 
-    if not float(np.sum(one_hot_data)) == float(one_hot_data.shape[0]):
+    if float(np.sum(one_hot_data)) != float(one_hot_data.shape[0]):
         raise ValueError("Data isn't one-hotted encoded properly.")
 
     return np.apply_along_axis(np.argmax, 1, one_hot_data)

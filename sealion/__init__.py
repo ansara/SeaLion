@@ -12,6 +12,7 @@ I hope you enjoy it!
 - Anish Lakkapragada 2021
 """
 
+
 from . import regression  # passed
 from . import decision_trees
 from . import DimensionalityReduction
@@ -39,8 +40,6 @@ if os.path.exists("cython_ran.pickle"):
         shutil.rmtree(dir_path + "/build")  # try to do this
     except Exception:
         pass
-    pass
-
 else:
     var = subprocess.Popen(
         "python3 setup.py build_ext --inplace",

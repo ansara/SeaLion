@@ -125,7 +125,7 @@ class RandomForest:
 
         self.chunk_data, self.chunk_labels = [], []
         if replacement:
-            for classifier in range(num_classifiers):
+            for _ in range(num_classifiers):
                 num_samples = min_data + random.randint(0, len(data) - min_data)
                 data_and_labels_set = random.sample(data_and_labels, num_samples)
                 self.chunk_data.append(
@@ -183,8 +183,9 @@ class RandomForest:
         """
         y_pred = RandomForest.predict(self, x_test)
         amount_correct = sum(
-            [1 if pred == label else 0 for pred, label in zip(y_pred, y_test)]
+            1 if pred == label else 0 for pred, label in zip(y_pred, y_test)
         )
+
         return amount_correct / len(x_test)
 
     def give_best_tree(self, x_test, y_test):
